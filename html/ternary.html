@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ternary operator · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="ternary">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>Ternary operator</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / Ternary.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">Ternary.java</p>
+    <h1>One line, one decision</h1>
+    <p class="lede">The whole if / else squeezed into a single expression. Drag the marks and watch which side of the colon wins.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 190" role="img" aria-label="A fork splitting into Pass and Fail">
+          <text id="t-input" x="180" y="22" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.6">marks = 45</text>
+
+          <polygon points="180,38 238,68 180,98 122,68" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+          <text id="t-cond" x="180" y="72" text-anchor="middle" class="d-text" fill="currentColor">marks &gt;= 40 ?</text>
+
+          <path id="t-path-true" d="M168,94 C130,120 92,124 72,144" fill="none" stroke="var(--yes)" stroke-width="2.5"/>
+          <text id="t-label-true" x="104" y="116" text-anchor="middle" class="d-text" fill="var(--yes)">true</text>
+
+          <path id="t-path-false" d="M192,94 C230,120 268,124 288,144" fill="none" stroke="var(--no)" stroke-width="2.5"/>
+          <text id="t-label-false" x="258" y="116" text-anchor="middle" class="d-text" fill="var(--no)">false</text>
+
+          <g id="t-box-pass">
+            <rect x="30" y="146" width="84" height="32" rx="8" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <text x="72" y="167" text-anchor="middle" class="d-text" fill="var(--yes)">"Pass"</text>
+          </g>
+
+          <g id="t-box-fail">
+            <rect x="246" y="146" width="84" height="32" rx="8" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2"/>
+            <text x="288" y="167" text-anchor="middle" class="d-text" fill="var(--no)">"Fail"</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">condition is <b id="t-fact-cond">true</b></span>
+        <span class="fact">result is <b id="t-fact-result">"Pass"</b></span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="marks">int marks <span class="val" id="marks-val">45</span></label>
+            <input type="range" id="marks" min="0" max="100" value="45">
+          </div>
+          <div class="ctrl">
+            <label for="passmark">pass mark <span class="val" id="passmark-val">40</span></label>
+            <input type="range" id="passmark" min="0" max="100" value="40">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">int marks = <i class="v" data-var="marks">45</i>;</span><span class="ln" data-line="2">String result = (marks &gt;= <i class="v" data-var="passmark">40</i>) ? <span data-part="true">"Pass"</span> : <span data-part="false">"Fail"</span>;</span><span class="ln" data-line="3">System.out.println("The student has: " + result);</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="t-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>Read it aloud: <em>is marks at least 40? if yes &ldquo;Pass&rdquo;, otherwise &ldquo;Fail&rdquo;.</em></li>
+        <li>Only one side ever runs. The other is never evaluated.</li>
+        <li>Both sides must hand back the same type &mdash; here, two Strings.</li>
+        <li>A ternary is an <em>expression</em>: it produces a value, so it can sit on the right of an <code>=</code>. A plain <code>if</code> cannot.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Set marks to exactly 40. Does it pass? Why does <code>&gt;=</code> matter?</li>
+        <li>Drag marks to 39, then 41. Watch the highlight jump sides.</li>
+        <li>Raise the pass mark above the marks without touching marks.</li>
+        <li>Ask: could you write this as an if / else? How many lines would it take?</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <span>&larr; First topic</span>
+  <a href="if-else.html">if / else &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/ternary.js"></script>
+</body>
+</html>

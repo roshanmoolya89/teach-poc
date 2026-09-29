@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>else if chain · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="else-if">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>else if chain</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / GradeChecker.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">GradeChecker.java</p>
+    <h1>A staircase of checks</h1>
+    <p class="lede">Questions run top to bottom and stop at the first yes. Drag the marks and count how many checks actually happen.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 200" role="img" aria-label="A staircase of grade bands">
+          <text id="g-input" x="180" y="20" text-anchor="middle" class="d-text" fill="var(--accent)">marks = 72</text>
+
+          <g id="g-step-0">
+            <rect x="14" y="34" width="104" height="30" rx="6" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="66" y="53" text-anchor="middle" class="d-text" fill="currentColor">&gt;= 90 &#8594; A</text>
+            <text id="g-mark-0" x="126" y="53" class="d-text" font-size="10" fill="var(--no)">no</text>
+          </g>
+
+          <g id="g-step-1">
+            <rect x="66" y="74" width="104" height="30" rx="6" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="118" y="93" text-anchor="middle" class="d-text" fill="currentColor">&gt;= 75 &#8594; B</text>
+            <text id="g-mark-1" x="178" y="93" class="d-text" font-size="10" fill="var(--no)">no</text>
+          </g>
+
+          <g id="g-step-2">
+            <rect x="118" y="114" width="104" height="30" rx="6" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="170" y="133" text-anchor="middle" class="d-text" fill="currentColor">&gt;= 60 &#8594; C</text>
+            <text id="g-mark-2" x="230" y="133" class="d-text" font-size="10" fill="var(--no)">no</text>
+          </g>
+
+          <g id="g-step-3">
+            <rect x="170" y="154" width="140" height="30" rx="6" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <text x="240" y="173" text-anchor="middle" class="d-text" font-size="10" fill="currentColor">else &#8594; needs work</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">grade: <b id="g-fact-grade">C</b></span>
+        <span class="fact">checks run: <b id="g-fact-checks">3</b> of 3</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="marks">int marks <span class="val" id="marks-val">72</span></label>
+            <input type="range" id="marks" min="0" max="100" value="72">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">int marks = <i class="v" data-var="marks">72</i>;</span><span class="ln" data-line="2"></span><span class="ln" data-line="3">if (marks &gt;= 90) {</span><span class="ln" data-line="4">    System.out.println("Grade A");</span><span class="ln" data-line="5">} else if (marks &gt;= 75) {</span><span class="ln" data-line="6">    System.out.println("Grade B");</span><span class="ln" data-line="7">} else if (marks &gt;= 60) {</span><span class="ln" data-line="8">    System.out.println("Grade C");</span><span class="ln" data-line="9">} else {</span><span class="ln" data-line="10">    System.out.println("Needs improvement");</span><span class="ln" data-line="11">}</span></code></pre>
+        <p class="hint" style="margin:12px 0 0">Struck-through lines were never reached. Faded lines were checked and came back false.</p>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="g-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>The chain stops at the first true test. Everything below it is never even looked at.</li>
+        <li>That is why each test only needs a lower bound. <code>marks &gt;= 75</code> already implies <em>and below 90</em>, because 90 and above was handled on the line before.</li>
+        <li>Order matters enormously. Put <code>&gt;= 60</code> first and every passing student gets a C.</li>
+        <li>The final <code>else</code> needs no condition &mdash; it catches whatever is left.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Set marks to 95 and ask why it does not also print B and C.</li>
+        <li>Watch the checks counter: 95 costs one check, 30 costs three. Why?</li>
+        <li>Ask what happens at exactly 75 and exactly 74.</li>
+        <li>Ask them to predict the grade before you release the slider.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="if-else.html">&larr; if / else</a>
+  <a href="switch.html">switch &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/else-if.js"></script>
+</body>
+</html>

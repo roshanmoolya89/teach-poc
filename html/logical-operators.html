@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logical operators · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="logical">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>Logical operators</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / CombineConditions.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">CombineConditions.java</p>
+    <h1>Two gates</h1>
+    <p class="lede">One file, two independent conditions. Take them one at a time: <code>&amp;&amp;</code> wants every input true, <code>||</code> is happy with one.</p>
+  </div>
+
+  <!-- ============================================================ AND -->
+
+  <div class="section-head">
+    <h2>The AND gate</h2>
+    <span class="op">&amp;&amp;</span>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>Both must be true</h2>
+      <div class="stage">
+        <svg viewBox="0 0 340 100" role="img" aria-label="An AND gate with two inputs">
+          <g id="a-in-0">
+            <rect x="12" y="10" width="84" height="28" rx="7" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <text id="a-in-0-t" x="54" y="28" text-anchor="middle" class="d-text" font-size="10.5" fill="var(--yes)">age &gt;= 18</text>
+          </g>
+          <g id="a-in-1">
+            <rect x="12" y="50" width="84" height="28" rx="7" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <text id="a-in-1-t" x="54" y="68" text-anchor="middle" class="d-text" font-size="10.5" fill="var(--yes)">hasLicense</text>
+          </g>
+
+          <path d="M96,24 H112 M96,64 H112" stroke="var(--dim)" stroke-width="1.5" fill="none"/>
+          <path d="M112,10 h20 a34,34 0 0 1 0,68 h-20 z" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="127" y="48" text-anchor="middle" class="d-text" font-size="9.5" fill="var(--accent)">AND</text>
+
+          <path id="a-wire" d="M166,44 H190" stroke="var(--yes)" stroke-width="2.5"/>
+          <g id="a-out">
+            <rect x="190" y="30" width="138" height="28" rx="7" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <text id="a-out-t" x="259" y="48" text-anchor="middle" class="d-text" font-size="10" fill="var(--yes)">"You can drive."</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">result: <b id="l-fact-and">true</b></span>
+        <span class="fact" id="l-fact-and-short">both sides read</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="age">int age <span class="val" id="age-val">25</span></label>
+            <input type="range" id="age" min="0" max="40" value="25">
+          </div>
+          <div class="ctrl">
+            <span class="ctrl-label">boolean hasLicense</span>
+            <div class="seg" id="l-license">
+              <button type="button" data-value="true" aria-pressed="true">true</button>
+              <button type="button" data-value="false" aria-pressed="false">false</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="a1">int age = <i class="v" data-var="age">25</i>;</span><span class="ln" data-line="a2">boolean hasLicense = <i class="v" data-var="license">true</i>;</span><span class="ln" data-line="a3"></span><span class="ln" data-line="a4">if (<span data-part="a0">age &gt;= 18</span> &amp;&amp; <span data-part="a1">hasLicense</span>) {</span><span class="ln" data-line="a5">    System.out.println("You can drive.");</span><span class="ln" data-line="a6">} else {</span><span class="ln" data-line="a7">    System.out.println("You cannot drive.");</span><span class="ln" data-line="a8">}</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="l-out-and"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================= OR -->
+
+  <div class="section-head">
+    <h2>The OR gate</h2>
+    <span class="op">||</span>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>One is enough</h2>
+      <div class="stage">
+        <svg viewBox="0 0 340 100" role="img" aria-label="An OR gate with two inputs">
+          <g id="o-in-0">
+            <rect x="12" y="10" width="84" height="28" rx="7" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2"/>
+            <text id="o-in-0-t" x="54" y="28" text-anchor="middle" class="d-text" font-size="10" fill="var(--no)">5 % 2 == 0</text>
+          </g>
+          <g id="o-in-1">
+            <rect x="12" y="50" width="84" height="28" rx="7" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2"/>
+            <text id="o-in-1-t" x="54" y="68" text-anchor="middle" class="d-text" font-size="10" fill="var(--no)">5 == 1</text>
+          </g>
+
+          <path d="M96,24 H114 M96,64 H114" stroke="var(--dim)" stroke-width="1.5" fill="none"/>
+          <path d="M112,10 h16 a36,36 0 0 1 0,68 h-16 a22,30 0 0 0 8,-34 a22,30 0 0 0 -8,-34 z" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="133" y="48" text-anchor="middle" class="d-text" font-size="9.5" fill="var(--accent)">OR</text>
+
+          <path id="o-wire" d="M164,44 H190" stroke="var(--no)" stroke-width="2.5"/>
+          <g id="o-out">
+            <rect x="190" y="26" width="138" height="36" rx="7" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2"/>
+            <text id="o-out-t1" x="259" y="41" text-anchor="middle" class="d-text" font-size="9.5" fill="var(--no)">odd number,</text>
+            <text id="o-out-t2" x="259" y="54" text-anchor="middle" class="d-text" font-size="9.5" fill="var(--no)">greater than one</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">result: <b id="l-fact-or">false</b></span>
+        <span class="fact" id="l-fact-or-short">both sides read</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="dice">int diceRoll <span class="val" id="dice-val">5</span></label>
+            <input type="range" id="dice" min="1" max="6" value="5">
+          </div>
+        </div>
+        <p class="hint" style="margin-top:16px;margin-bottom:0"><code>diceRoll % 2 == 0</code> reads as <em>the remainder after dividing by two is zero</em> &mdash; which is how you ask whether a number is even.</p>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="o1">int diceRoll = <i class="v" data-var="dice">5</i>;</span><span class="ln" data-line="o2"></span><span class="ln" data-line="o3">if (<span data-part="o0">diceRoll % 2 == 0</span> || <span data-part="o1">diceRoll == 1</span>) {</span><span class="ln" data-line="o4">    System.out.println("You rolled an even number or a one.");</span><span class="ln" data-line="o5">} else {</span><span class="ln" data-line="o6">    System.out.println("You rolled an odd number greater than one.");</span><span class="ln" data-line="o7">}</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="l-out-or"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li><code>&amp;&amp;</code> is true only when both sides are true. <code>||</code> is true when at least one is.</li>
+        <li>Java short-circuits. With <code>&amp;&amp;</code>, a false left side settles it and the right side is never evaluated. With <code>||</code>, a true left side does the same. The unread operand goes dashed in the diagram and struck through in the code.</li>
+        <li>That is not just a speed trick. It is what makes <code>if (s != null &amp;&amp; s.length() &gt; 0)</code> safe.</li>
+        <li>Both conditions live in the same <code>main</code> method. They run one after the other and have nothing to do with each other.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Drop age below 18 and watch <code>hasLicense</code> get struck out. Ask why Java stopped reading.</li>
+        <li>Keep age under 18 and flip the licence back and forth. Ask why the output does not change.</li>
+        <li>Find the one dice value where the <code>||</code> is true but the number is odd. (It is 1.)</li>
+        <li>Ask what <code>&amp;</code> and <code>|</code> do differently from <code>&amp;&amp;</code> and <code>||</code>.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="switch.html">&larr; switch</a>
+  <a href="for-loop.html">for loop &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/logical-operators.js"></script>
+</body>
+</html>

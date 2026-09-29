@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>switch · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="switch">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>switch</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / Switch.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">Switch.java</p>
+    <h1>A dial with seven stops</h1>
+    <p class="lede">One value, compared against labelled cases until it matches. Then take the brakes off and watch it fall through.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 200" role="img" aria-label="A dial pointing at the matching case">
+          <rect x="8" y="6" width="88" height="22" rx="11" fill="var(--amber-soft)"/>
+          <text id="s-chip" x="52" y="21" text-anchor="middle" class="d-text" fill="var(--amber)">day = 3</text>
+
+          <text id="s-default" x="352" y="21" text-anchor="end" class="d-text" font-size="10" fill="currentColor" opacity="0.55">no match &#8594; default</text>
+
+          <circle cx="180" cy="110" r="56" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <circle cx="180" cy="110" r="40" fill="none" stroke="var(--line)" stroke-width="1" opacity="0.5"/>
+
+          <g id="s-labels" class="d-text" fill="currentColor" text-anchor="middle">
+            <text data-day="1" x="180" y="40">1 Mon</text>
+            <text data-day="2" x="238" y="68">2 Tue</text>
+            <text data-day="3" x="254" y="130">3 Wed</text>
+            <text data-day="4" x="212" y="182">4 Thu</text>
+            <text data-day="5" x="148" y="182">5 Fri</text>
+            <text data-day="6" x="106" y="130">6 Sat</text>
+            <text data-day="7" x="122" y="68">7 Sun</text>
+          </g>
+
+          <g id="s-needle" transform="rotate(-90 180 110)">
+            <line x1="180" y1="110" x2="226" y2="110" stroke="var(--amber)" stroke-width="3.5" stroke-linecap="round"/>
+          </g>
+          <circle cx="180" cy="110" r="6.5" fill="var(--amber)"/>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">matched: <b id="s-fact-case">case 3</b></span>
+        <span class="fact">assignments: <b id="s-fact-assign">1</b></span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="day">int day <span class="val" id="day-val">3</span></label>
+            <input type="range" id="day" min="0" max="9" value="3">
+            <p class="hint" style="margin:2px 0 0">Push it past 7 or down to 0 to reach <code>default</code>.</p>
+          </div>
+          <div class="ctrl">
+            <span class="ctrl-label">keep the break; statements</span>
+            <div class="seg seg-warn" id="s-break">
+              <button type="button" data-value="true" aria-pressed="true">yes</button>
+              <button type="button" data-value="false" aria-pressed="false">no</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">int day = <i class="v" data-var="day">3</i>;</span><span class="ln" data-line="2">String dayName;</span><span class="ln" data-line="3"></span><span class="ln" data-line="4">switch (day) {</span><span class="ln" data-line="5">    case 1:  dayName = "Monday";     <i data-brk>break;</i></span><span class="ln" data-line="6">    case 2:  dayName = "Tuesday";    <i data-brk>break;</i></span><span class="ln" data-line="7">    case 3:  dayName = "Wednesday";  <i data-brk>break;</i></span><span class="ln" data-line="8">    case 4:  dayName = "Thursday";   <i data-brk>break;</i></span><span class="ln" data-line="9">    case 5:  dayName = "Friday";     <i data-brk>break;</i></span><span class="ln" data-line="10">    case 6:  dayName = "Saturday";   <i data-brk>break;</i></span><span class="ln" data-line="11">    case 7:  dayName = "Sunday";     <i data-brk>break;</i></span><span class="ln" data-line="12">    default: dayName = "Invalid day";</span><span class="ln" data-line="13">}</span><span class="ln" data-line="14"></span><span class="ln" data-line="15">System.out.println("The day is: " + dayName);</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="s-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>Reach for <code>switch</code> when one variable is tested against many fixed values. It says <em>pick one of these</em> more clearly than a long else-if chain.</li>
+        <li>Case labels must be constants. You cannot write <code>case day &gt; 5:</code> &mdash; that is else-if territory.</li>
+        <li><code>break</code> leaves the switch. Without it, execution keeps running straight down through the cases below.</li>
+        <li><code>default</code> catches everything unmatched. It is not required, but leaving it out means <code>dayName</code> may never be assigned.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Set day to 3, then switch the breaks off. Ask why Wednesday became &ldquo;Invalid day&rdquo;.</li>
+        <li>With breaks off, try day 7. Only one case below it, and it is default.</li>
+        <li>Set day to 9 and ask which line saves the program.</li>
+        <li>Ask: when would falling through on purpose be useful? (Grouping cases 6 and 7 as &ldquo;weekend&rdquo;.)</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="else-if.html">&larr; else if chain</a>
+  <a href="logical-operators.html">Logical operators &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/switch.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>if / else · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="if-else">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>if / else</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / IsRaining.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">IsRaining.java</p>
+    <h1>Two doors, one opens</h1>
+    <p class="lede">A boolean picks the room, and Java runs exactly one block. Flip the switch and watch the light move.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 190" role="img" aria-label="Two doors, the active one lit">
+          <text id="r-input" x="180" y="22" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.6">isRaining = true</text>
+
+          <g id="r-door-if">
+            <rect x="30" y="42" width="112" height="118" rx="9" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2.5"/>
+            <text x="86" y="68" text-anchor="middle" class="d-text" fill="var(--yes)">if (isRaining)</text>
+            <text x="86" y="102" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="currentColor">Bring an</text>
+            <text x="86" y="119" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="currentColor">umbrella</text>
+            <circle id="r-dot-if" cx="86" cy="140" r="5.5" fill="var(--yes)"/>
+          </g>
+
+          <text x="180" y="94" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="currentColor" opacity="0.55">one</text>
+          <text x="180" y="108" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="currentColor" opacity="0.55">or the</text>
+          <text x="180" y="122" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="currentColor" opacity="0.55">other</text>
+
+          <g id="r-door-else">
+            <rect x="218" y="42" width="112" height="118" rx="9" fill="var(--surface)" stroke="var(--dim)" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="274" y="68" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.7">else</text>
+            <text x="274" y="102" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="currentColor">Enjoy your</text>
+            <text x="274" y="119" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="currentColor">day</text>
+            <circle id="r-dot-else" cx="274" cy="140" r="5.5" fill="var(--yes)"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">blocks that run: <b>1</b></span>
+        <span class="fact">branch taken: <b id="r-fact">if</b></span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <span class="ctrl-label">boolean isRaining</span>
+            <div class="seg" id="r-toggle">
+              <button type="button" data-value="true" aria-pressed="true">true</button>
+              <button type="button" data-value="false" aria-pressed="false">false</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint" style="margin-top:16px;margin-bottom:0">A condition in Java must be a boolean. <code>isRaining</code> already is one, so it needs no comparison.</p>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">boolean isRaining = <i class="v" data-var="isRaining">true</i>;</span><span class="ln" data-line="2"></span><span class="ln" data-line="3">if (isRaining) {</span><span class="ln" data-line="4">    System.out.println("It's raining. Don't forget your umbrella!");</span><span class="ln" data-line="5">} else {</span><span class="ln" data-line="6">    System.out.println("It's not raining. Enjoy your day!");</span><span class="ln" data-line="7">}</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="r-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>The condition inside <code>if ( )</code> must be true or false &mdash; nothing else. Java will not accept a number here the way C does.</li>
+        <li>Exactly one block runs. Never both, never neither.</li>
+        <li>The <code>else</code> block is the catch-all for every other case.</li>
+        <li><code>if (isRaining == true)</code> works but is noise. Compare booleans to nothing.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Before flipping the switch, ask which line will print. Then flip it.</li>
+        <li>Ask what happens if you delete the <code>else</code> block entirely.</li>
+        <li>Ask: how would you add a third case, like &ldquo;it is snowing&rdquo;? That is the next topic.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="ternary.html">&larr; Ternary operator</a>
+  <a href="else-if.html">else if chain &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/if-else.js"></script>
+</body>
+</html>

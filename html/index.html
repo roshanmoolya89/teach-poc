@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java course · Interactive topics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="index">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<main class="home">
+  <p class="eyebrow">ConditionalsAndLoops &middot; interactive</p>
+  <h1>Change the input,<br>watch the branch move</h1>
+  <p class="lede">One page per topic. Every page has the diagram on the left, the real Java on the right, and controls that light up the line that actually runs. Nothing to install &mdash; open a page and drag something.</p>
+
+  <section class="group">
+    <h2>Conditionals</h2>
+    <div class="cards">
+
+      <a class="card" href="ternary.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <polygon points="100,10 138,30 100,50 62,30" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <path d="M92,47 C72,58 56,60 46,66" fill="none" stroke="var(--yes)" stroke-width="2"/>
+            <path d="M108,47 C128,58 144,60 154,66" fill="none" stroke="var(--no)" stroke-width="2"/>
+            <rect x="18" y="64" width="56" height="16" rx="5" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="1.5"/>
+            <rect x="126" y="64" width="56" height="16" rx="5" fill="var(--no-soft)" stroke="var(--no)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <p class="file">Ternary.java</p>
+        <p class="name">One line, one decision</p>
+        <p class="desc">The ternary operator. Drag the marks past the pass mark and watch the halves swap.</p>
+      </a>
+
+      <a class="card" href="if-else.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <rect x="20" y="12" width="72" height="60" rx="7" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2.5"/>
+            <circle cx="56" cy="58" r="4" fill="var(--yes)"/>
+            <rect x="108" y="12" width="72" height="60" rx="7" fill="var(--surface)" stroke="var(--dim)" stroke-width="2" stroke-dasharray="5 4" opacity="0.6"/>
+          </svg>
+        </div>
+        <p class="file">IsRaining.java</p>
+        <p class="name">Two doors, one opens</p>
+        <p class="desc">if / else. A single boolean decides which block runs, and never both.</p>
+      </a>
+
+      <a class="card" href="else-if.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <rect x="12" y="8" width="62" height="16" rx="5" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <rect x="42" y="30" width="62" height="16" rx="5" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <rect x="72" y="52" width="62" height="18" rx="5" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2.5"/>
+            <rect x="126" y="52" width="58" height="16" rx="5" fill="var(--surface)" stroke="var(--line)" stroke-width="2" opacity="0.5"/>
+          </svg>
+        </div>
+        <p class="file">GradeChecker.java</p>
+        <p class="name">A staircase of checks</p>
+        <p class="desc">else if chains. Watch the chain stop dead at the first true test.</p>
+      </a>
+
+      <a class="card" href="switch.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <circle cx="100" cy="42" r="30" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+            <circle cx="100" cy="42" r="21" fill="none" stroke="var(--line)" stroke-width="1" opacity="0.5"/>
+            <line x1="100" y1="42" x2="124" y2="36" stroke="var(--amber)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="42" r="4.5" fill="var(--amber)"/>
+          </svg>
+        </div>
+        <p class="file">Switch.java</p>
+        <p class="name">A dial with seven stops</p>
+        <p class="desc">switch and case. Take the <code>break</code> statements out and watch it fall through.</p>
+      </a>
+
+      <a class="card" href="logical-operators.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <rect x="14" y="14" width="40" height="14" rx="4" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <rect x="14" y="34" width="40" height="14" rx="4" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <path d="M54,21 H68 M54,41 H68" stroke="var(--dim)" stroke-width="1.5"/>
+            <path d="M68,12 h14 a19,19 0 0 1 0,38 h-14 z" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <path d="M101,31 H120" stroke="var(--yes)" stroke-width="2"/>
+            <rect x="120" y="22" width="62" height="18" rx="5" fill="var(--yes-soft)" stroke="var(--yes)" stroke-width="2"/>
+            <rect x="14" y="60" width="40" height="13" rx="4" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2"/>
+            <rect x="70" y="60" width="40" height="13" rx="4" fill="var(--no-soft)" stroke="var(--no)" stroke-width="2" opacity="0.4" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <p class="file">CombineConditions.java</p>
+        <p class="name">Two gates</p>
+        <p class="desc">&amp;&amp; and ||, plus the short-circuit: see the operand Java never bothers to read.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="group">
+    <h2>Loops</h2>
+    <div class="cards">
+
+      <a class="card" href="for-loop.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <circle cx="100" cy="42" r="28" fill="none" stroke="var(--line)" stroke-width="7"/>
+            <path d="M100,14 A28,28 0 1 1 78,70" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="100" cy="14" r="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="126" cy="29" r="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="126" cy="56" r="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="74" cy="29" r="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="78" cy="70" r="8" fill="var(--accent)"/>
+          </svg>
+        </div>
+        <p class="file">loops/For.java</p>
+        <p class="name">One track, five laps</p>
+        <p class="desc">Step through init, check, body and update one move at a time, counting as you go.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="group">
+    <h2>Layout</h2>
+    <div class="cards">
+
+      <a class="card" href="flexbox.html">
+        <div class="thumb">
+          <svg viewBox="0 0 200 84" aria-hidden="true">
+            <rect x="10" y="8" width="180" height="68" rx="7" fill="var(--surface)" stroke="var(--line)" stroke-width="2" stroke-dasharray="5 4"/>
+            <rect x="24" y="24" width="30" height="36" rx="5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+            <rect x="62" y="24" width="30" height="36" rx="5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+            <rect x="100" y="24" width="30" height="36" rx="5" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="2"/>
+            <rect x="138" y="24" width="30" height="36" rx="5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          </svg>
+        </div>
+        <p class="file">CSS</p>
+        <p class="name">Flexbox playground</p>
+        <p class="desc">Container and item properties side by side, with the CSS writing itself as you go.</p>
+      </a>
+
+    </div>
+  </section>
+</main>
+
+<footer class="pagenav">
+  <span>Open any page straight from the file system &mdash; no server needed.</span>
+</footer>
+
+</div>
+
+<script src="js/common.js"></script>
+
+</body>
+</html>

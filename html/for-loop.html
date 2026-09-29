@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>for loop · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="for">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>for loop</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / loops / For.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">loops/For.java</p>
+    <h1>One track, five laps</h1>
+    <p class="lede">Start once, check before every lap, update at the end of each. Step through it one move at a time and count the checks.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 210" role="img" aria-label="A circular track with one stop per iteration">
+          <text id="f-header" x="180" y="20" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.65">for (int i = 1; i &lt;= 5; i++)</text>
+
+          <circle cx="180" cy="118" r="64" fill="none" stroke="var(--line)" stroke-width="10"/>
+          <circle id="f-track" cx="180" cy="118" r="64" fill="none" stroke="var(--accent)" stroke-width="10"
+                  stroke-linecap="round" transform="rotate(-90 180 118)"/>
+
+          <g id="f-stops"></g>
+
+          <text id="f-centre-1" x="180" y="114" text-anchor="middle" font-family="var(--sans)" font-size="12" fill="currentColor" opacity="0.6">same body,</text>
+          <text id="f-centre-2" x="180" y="130" text-anchor="middle" font-family="var(--sans)" font-size="12" fill="currentColor" opacity="0.6">five laps</text>
+
+          <g id="f-exit">
+            <path d="M196,44 L210,36 L210,52 Z" fill="var(--no)"/>
+            <text id="f-exit-t" x="218" y="49" class="d-text" font-size="10" fill="var(--no)">i = 6 &#8594; exit</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">i is now <b id="f-fact-i">&mdash;</b></span>
+        <span class="fact">body ran <b id="f-fact-body">0</b>&times;</span>
+        <span class="fact">check ran <b id="f-fact-check">0</b>&times;</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="start">start &mdash; int i = <span class="val" id="start-val">1</span></label>
+            <input type="range" id="start" min="0" max="10" value="1">
+          </div>
+          <div class="ctrl">
+            <label for="end">condition &mdash; i &lt;= <span class="val" id="end-val">5</span></label>
+            <input type="range" id="end" min="0" max="12" value="5">
+          </div>
+          <div class="ctrl">
+            <label for="step">update &mdash; i += <span class="val" id="step-val">1</span></label>
+            <input type="range" id="step" min="1" max="4" value="1">
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:18px">
+          <button class="btn btn-primary" id="f-run">Run all</button>
+          <button class="btn" id="f-step">Step</button>
+          <button class="btn" id="f-reset">Reset</button>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">for (<span data-part="init">int i = <i class="v" data-var="start">1</i></span>; <span data-part="cond">i &lt;= <i class="v" data-var="end">5</i></span>; <span data-part="upd">i += <i class="v" data-var="step">1</i></span>) {</span><span class="ln" data-line="2">    System.out.println("Iteration: " + i);</span><span class="ln" data-line="3">}</span></code></pre>
+        <p class="hint" style="margin:12px 0 0" id="f-phase">Press Step to walk through it one move at a time.</p>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="f-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>Three parts, three different schedules. <code>int i = 1</code> runs once. <code>i &lt;= 5</code> runs before every lap. <code>i++</code> runs after every lap.</li>
+        <li>The check always runs one more time than the body &mdash; the last check is the one that fails and ends the loop.</li>
+        <li><code>i</code> is declared inside the <code>for</code>, so it does not exist after the loop finishes.</li>
+        <li>If the condition is false the very first time, the body never runs at all. That is not an error.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Step through once and count aloud: check, body, update, check, body&hellip;</li>
+        <li>Ask how many times the check runs for five laps, then confirm with the counter.</li>
+        <li>Set start to 6 and end to 5. Ask what prints before you run it.</li>
+        <li>Set the update to 2. Which numbers print now, and how many laps?</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="logical-operators.html">&larr; Logical operators</a>
+  <a href="flexbox.html">Flexbox &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/for-loop.js"></script>
+</body>
+</html>

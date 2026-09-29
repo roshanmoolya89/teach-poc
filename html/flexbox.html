@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flexbox playground · Java course</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Everything below is specific to the flexbox demo. */
+
+      .flex-stage {
+        background: var(--panel);
+        border-radius: 11px;
+        padding: 14px;
+      }
+
+      #preview {
+        display: flex;
+        background: var(--surface);
+        border: 2px dashed var(--line);
+        border-radius: 9px;
+        height: 260px;
+        padding: 12px;
+        overflow: auto;
+      }
+
+      .item {
+        background: var(--accent-soft);
+        border: 2px solid var(--accent);
+        border-radius: 8px;
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Kept small enough that five boxes still fit when the main axis is
+       vertical — otherwise flex-shrink cannot get them under the height. */
+        min-width: 48px;
+        min-height: 34px;
+        padding: 8px 14px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .item.selected {
+        background: var(--amber-soft);
+        border-color: var(--amber);
+        color: var(--amber);
+      }
+
+      .item:focus-visible {
+        outline: 2px solid var(--amber);
+        outline-offset: 2px;
+      }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 16px;
+      }
+
+      .item-picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .item-picker button {
+        font-family: var(--mono);
+        font-size: 13px;
+        width: 38px;
+        height: 34px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--ink-soft);
+        cursor: pointer;
+      }
+
+      .item-picker button[aria-pressed="true"] {
+        background: var(--amber-soft);
+        border-color: var(--amber);
+        color: var(--amber);
+        font-weight: 500;
+      }
+
+      .axis-note {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        margin: 12px 0 0;
+      }
+
+      .axis-note b {
+        color: var(--accent);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body data-topic="flexbox">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-col">
+      <div class="preview-bar">
+        <span id="preview-badge"
+          >Live preview &mdash; controlled from the other tab</span
+        >
+        <span>Flexbox playground</span>
+      </div>
+
+      <header class="topbar">
+        <span class="crumb">CSS / flexbox</span>
+        <span class="topbar-right"><span id="pop-slot"></span></span>
+      </header>
+
+      <main class="topic">
+        <div class="intro">
+          <p class="eyebrow">Flexbox</p>
+          <h1>Boxes in a row, until you say otherwise</h1>
+          <p class="lede">
+            A flex container lays its children along one axis. Change a property
+            and the boxes move &mdash; the CSS underneath updates to match.
+          </p>
+        </div>
+
+        <div class="workbench">
+          <section class="panel panel-preview">
+            <h2>Live preview</h2>
+            <p class="hint">
+              Click a box to select it, then use the item controls.
+            </p>
+            <div class="flex-stage">
+              <div id="preview">
+                <div class="item" tabindex="0" data-index="0">1</div>
+                <div class="item" tabindex="0" data-index="1">222</div>
+                <div class="item" tabindex="0" data-index="2">3</div>
+                <div class="item" tabindex="0" data-index="3">4</div>
+                <div class="item" tabindex="0" data-index="4">5</div>
+              </div>
+            </div>
+            <p class="axis-note" id="fx-axis">
+              main axis runs <b id="fx-main">left to right</b> &middot; cross
+              axis runs <b id="fx-cross">top to bottom</b>
+            </p>
+            <p class="axis-note" id="fx-warn" hidden></p>
+          </section>
+
+          <section class="panel stack panel-controls">
+            <div>
+              <h2>The container</h2>
+              <div class="grid2">
+                <div class="ctrl">
+                  <label for="fx-display">display</label>
+                  <select id="fx-display">
+                    <option>flex</option>
+                    <option>inline-flex</option>
+                    <option>block</option>
+                    <option>grid</option>
+                  </select>
+                </div>
+                <div class="ctrl">
+                  <label for="fx-direction">flex-direction</label>
+                  <select id="fx-direction">
+                    <option>row</option>
+                    <option>row-reverse</option>
+                    <option>column</option>
+                    <option>column-reverse</option>
+                  </select>
+                </div>
+                <div class="ctrl">
+                  <label for="fx-wrap">flex-wrap</label>
+                  <select id="fx-wrap">
+                    <option>nowrap</option>
+                    <option>wrap</option>
+                    <option>wrap-reverse</option>
+                  </select>
+                </div>
+                <div class="ctrl">
+                  <label for="fx-justify">justify-content</label>
+                  <select id="fx-justify">
+                    <option>flex-start</option>
+                    <option>flex-end</option>
+                    <option>center</option>
+                    <option>space-between</option>
+                    <option>space-around</option>
+                    <option>space-evenly</option>
+                  </select>
+                </div>
+                <div class="ctrl">
+                  <label for="fx-align">align-items</label>
+                  <select id="fx-align">
+                    <option>stretch</option>
+                    <option>flex-start</option>
+                    <option>flex-end</option>
+                    <option>center</option>
+                    <option>baseline</option>
+                  </select>
+                </div>
+                <div class="ctrl">
+                  <label for="fx-gap"
+                    >gap <span class="val" id="fx-gap-val">10px</span></label
+                  >
+                  <input type="range" id="fx-gap" min="0" max="40" value="10" />
+                </div>
+                <div class="ctrl">
+                  <label for="fx-height"
+                    >container height
+                    <span class="val" id="fx-height-val">260px</span></label
+                  >
+                  <input
+                    type="range"
+                    id="fx-height"
+                    min="140"
+                    max="420"
+                    value="260"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2>The selected item</h2>
+              <div class="item-picker" id="fx-picker">
+                <button type="button" data-index="0" aria-pressed="true">
+                  1
+                </button>
+                <button type="button" data-index="1" aria-pressed="false">
+                  2
+                </button>
+                <button type="button" data-index="2" aria-pressed="false">
+                  3
+                </button>
+                <button type="button" data-index="3" aria-pressed="false">
+                  4
+                </button>
+                <button type="button" data-index="4" aria-pressed="false">
+                  5
+                </button>
+              </div>
+              <div class="grid2" style="margin-top: 14px">
+                <div class="ctrl">
+                  <label for="fx-grow"
+                    >flex-grow
+                    <span class="val" id="fx-grow-val">0</span></label
+                  >
+                  <input type="range" id="fx-grow" min="0" max="4" value="0" />
+                </div>
+                <div class="ctrl">
+                  <label for="fx-shrink"
+                    >flex-shrink
+                    <span class="val" id="fx-shrink-val">1</span></label
+                  >
+                  <input
+                    type="range"
+                    id="fx-shrink"
+                    min="0"
+                    max="4"
+                    value="1"
+                  />
+                </div>
+                <div class="ctrl">
+                  <label for="fx-basis"
+                    >flex-basis
+                    <span class="val" id="fx-basis-val">auto</span></label
+                  >
+                  <input
+                    type="range"
+                    id="fx-basis"
+                    min="-1"
+                    max="300"
+                    value="-1"
+                    step="10"
+                  />
+                </div>
+                <div class="ctrl">
+                  <label for="fx-order"
+                    >order <span class="val" id="fx-order-val">0</span></label
+                  >
+                  <input
+                    type="range"
+                    id="fx-order"
+                    min="-2"
+                    max="3"
+                    value="0"
+                  />
+                </div>
+                <div class="ctrl">
+                  <label for="fx-self">align-self</label>
+                  <select id="fx-self">
+                    <option>auto</option>
+                    <option>flex-start</option>
+                    <option>flex-end</option>
+                    <option>center</option>
+                    <option>stretch</option>
+                    <option>baseline</option>
+                  </select>
+                </div>
+              </div>
+              <div class="btn-row" style="margin-top: 16px">
+                <button class="btn" id="fx-reset">Reset everything</button>
+              </div>
+            </div>
+
+            <div>
+              <h2>The CSS</h2>
+              <pre class="code"><code id="fx-css"></code></pre>
+            </div>
+          </section>
+        </div>
+
+        <div class="notes">
+          <div class="note">
+            <h3>What to point out</h3>
+            <ul>
+              <li>
+                Flexbox has two axes. <code>flex-direction</code> decides which
+                one is the main axis, and everything else follows from that.
+              </li>
+              <li>
+                <code>justify-content</code> works along the main axis.
+                <code>align-items</code> works across it. Swap the direction to
+                <code>column</code> and the two trade places.
+              </li>
+              <li>
+                <code>align-items: stretch</code> is the default, which is why
+                boxes fill the container height until you change it.
+              </li>
+              <li>
+                <code>flex-grow</code> shares out leftover space.
+                <code>flex-shrink</code> decides who gives way when there is not
+                enough.
+              </li>
+              <li>
+                <code>order</code> moves a box visually without touching the
+                HTML. Handy, but screen readers still follow the source order.
+              </li>
+            </ul>
+          </div>
+          <div class="note try">
+            <h3>Try this with the class</h3>
+            <ul>
+              <li>
+                Set <code>justify-content: space-between</code>, then switch
+                direction to <code>column</code>. Ask why the boxes now spread
+                vertically.
+              </li>
+              <li>
+                Give box 3 a <code>flex-grow</code> of 1 and ask where the extra
+                space went.
+              </li>
+              <li>
+                Set every box's <code>flex-basis</code> to 200px with
+                <code>nowrap</code>, then switch to <code>wrap</code>.
+              </li>
+              <li>
+                Give box 5 an <code>order</code> of -1 and ask what moved
+                &mdash; the box, or the HTML?
+              </li>
+            </ul>
+          </div>
+        </div>
+      </main>
+
+      <nav class="pagenav">
+        <a href="for-loop.html">&larr; for loop</a>
+        <span>Last topic</span>
+      </nav>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/flexbox.js"></script>
+  </body>
+</html>

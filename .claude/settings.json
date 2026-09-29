@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 build_slides.py)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(python3 shell.py)",
+      "Bash(python3 -c \"import urllib.parse,json;print\\(urllib.parse.quote\\(json.dumps\\({'marks':'95'}\\)\\)\\)\")",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=900,1250 --virtual-time-budget=5000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/shots/p-elseif95.png 'file:///private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/synctest2.html?page=file:///Users/roshanmoolya/Documents/java_projects/java-course/java-teaching/html/else-if.html%3Fview=preview&s=__CMDSUB_OUTPUT__')",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1500,760 --virtual-time-budget=4000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/shots/align-for.png file:///Users/roshanmoolya/Documents/java_projects/java-course/java-teaching/html/for-loop.html)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1500,700 --virtual-time-budget=4000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/shots/align-logical.png file:///Users/roshanmoolya/Documents/java_projects/java-course/java-teaching/html/logical-operators.html)"
+    ]
+  }
+}
