@@ -374,6 +374,34 @@ input[type="range"] {
   height: 22px;
 }
 
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.range-row input[type="range"] { flex: 1; min-width: 0; }
+
+.range-box {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  padding: 5px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: right;
+}
+
+.range-box:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.range-box:disabled { opacity: 0.45; }
+
 select {
   font-family: var(--mono);
   font-size: 14px;
@@ -684,9 +712,15 @@ body.is-preview .pagenav,
 body.is-preview .block-controls,
 body.is-preview .section-head .op { display: none; }
 
-body.is-preview .topic { max-width: 1100px; padding-top: 22px; }
+body.is-preview .topic { max-width: none; padding: 22px 28px 28px; }
 
-body.is-preview .workbench { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+/* live preview (70%) on the left, code (30%) on the right at full height */
+body.is-preview .workbench {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  gap: 28px;
+  align-items: stretch;
+  min-height: calc(100vh - 120px);
+}
 
 body.is-preview .panel-preview,
 body.is-preview .panel-controls {
@@ -696,7 +730,37 @@ body.is-preview .panel-controls {
 }
 
 body.is-preview .panel-preview { order: 0; }
-body.is-preview .panel-controls { order: 1; }
+body.is-preview .panel-controls { order: 1; display: flex; flex-direction: column; }
+
+/* code and output split the column's height evenly (the flexbox page has
+   no output, so its CSS takes the whole column) */
+body.is-preview .panel-controls > div:not(.block-controls) {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+body.is-preview .panel-controls > .block-controls + div:not(.block-controls) { margin-top: 0; }
+body.is-preview .panel-controls .code,
+body.is-preview .panel-controls .console {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* the code column is narrow, so wrap long lines instead of scrolling */
+body.is-preview .code { white-space: pre-wrap; overflow-wrap: anywhere; }
+body.is-preview .code .ln { width: auto; }
+
+/* keep the diagram from pushing the variables and output off screen */
+body.is-preview .stage svg { max-height: 62vh; }
+
+@media (max-width: 900px) {
+  body.is-preview .workbench { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  body.is-preview .panel-controls > div:not(.block-controls),
+  body.is-preview .panel-controls .code,
+  body.is-preview .panel-controls .console { flex: none; }
+}
 
 body.is-preview .panel-preview > h2,
 body.is-preview .panel-preview > .hint { display: none; }
