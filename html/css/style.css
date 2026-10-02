@@ -296,6 +296,7 @@ body { display: flex; align-items: flex-start; }
 }
 
 .panel {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -321,6 +322,104 @@ body { display: flex; align-items: flex-start; }
 }
 
 .stack > * + * { margin-top: 26px; }
+
+/* ---------------------------------------------------------------- syntax */
+
+/* The general form of the statement, above the worked example. */
+.syntax { margin-bottom: 22px; }
+
+/* a placeholder the student replaces with their own code */
+.slot {
+  color: var(--amber);
+  background: var(--amber-soft);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 9px 16px;
+  align-items: baseline;
+  margin: 16px 0 0;
+  font-size: 14.5px;
+}
+
+.legend dt { font-family: var(--mono); font-size: 13px; }
+.legend dd { margin: 0; color: var(--ink-soft); }
+
+.legend code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--panel);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+@media (max-width: 560px) {
+  .legend { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .legend dd { margin-bottom: 9px; }
+}
+
+/* ---------------------------------------------------------------- maximize */
+
+/* A panel opened full screen in the same tab. The panel is not moved in the
+   DOM, only pinned over the page, so its controls and diagram stay live. */
+
+.btn-max {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.stack > .btn-max { margin-top: 0; }
+
+.btn-max:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-max svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+body.has-max { overflow: hidden; }
+
+.panel.is-max {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+  padding: 28px clamp(20px, 5vw, 64px) 36px;
+}
+
+/* stays in the corner while the panel scrolls */
+.panel.is-max > .btn-max { position: fixed; top: 16px; right: 20px; z-index: 1; }
+
+/* bigger, since a maximized panel is being read from a distance */
+.panel.is-max .code { font-size: 16px; line-height: 1.8; }
+.panel.is-max .console { font-size: 16px; max-height: none; }
+.panel.is-max .fact { font-size: 15px; padding: 10px 16px; }
+.panel.is-max .legend { font-size: 16px; }
+.panel.is-max .legend dt,
+.panel.is-max .legend code { font-size: 15px; }
+.panel.is-max .stage svg { max-height: calc(100vh - 200px); }
 
 /* ---------------------------------------------------------------- diagram */
 
@@ -652,7 +751,8 @@ select {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  /* auto-fill, not auto-fit: a group with one card keeps a card's width */
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 18px;
 }
 
@@ -676,7 +776,7 @@ select {
   margin-bottom: 14px;
 }
 
-.card .thumb svg { display: block; width: 100%; height: auto; }
+.card .thumb svg { display: block; width: 100%; height: auto; max-height: 120px; }
 
 .card .file {
   font-family: var(--mono);
@@ -711,6 +811,23 @@ body.is-preview .notes,
 body.is-preview .pagenav,
 body.is-preview .block-controls,
 body.is-preview .section-head .op { display: none; }
+
+/* the syntax panel stays, with the skeleton and its legend side by side so it
+   takes as little height as possible above the diagram */
+body.is-preview .syntax {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 28px;
+  align-items: start;
+  align-content: start;
+}
+body.is-preview .syntax > h2 { grid-column: 1 / -1; }
+body.is-preview .syntax .legend { margin-top: 0; font-size: 16px; }
+
+@media (max-width: 900px) {
+  body.is-preview .syntax { grid-template-columns: minmax(0, 1fr); }
+  body.is-preview .syntax .legend { margin-top: 16px; }
+}
 
 body.is-preview .topic { max-width: none; padding: 22px 28px 28px; }
 

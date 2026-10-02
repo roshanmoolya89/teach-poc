@@ -32,6 +32,26 @@
     <p class="lede">One value, compared against labelled cases until it matches. Then take the brakes off and watch it fall through.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>switch (<span class="slot">expression</span>) {
+    case <span class="slot">value1</span>:
+        <span class="cmt">// runs when expression equals value1</span>
+        break;
+    case <span class="slot">value2</span>:
+        <span class="cmt">// runs when expression equals value2</span>
+        break;
+    default:
+        <span class="cmt">// runs when no case matches</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">expression</span></dt><dd>Evaluated once. Its value is compared against each case: <code>day</code></dd>
+      <dt><span class="slot">value1</span></dt><dd>A constant to match, such as <code>1</code> or <code>"MON"</code>. It cannot be a variable or a range.</dd>
+      <dt>break</dt><dd>Leaves the switch. Without it, execution falls through into the next case.</dd>
+      <dt>default</dt><dd>Optional. Runs when none of the cases match, like a final <code>else</code>.</dd>
+    </dl>
+  </section>
+
   <div class="workbench">
 
     <section class="panel panel-preview">

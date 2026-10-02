@@ -32,6 +32,23 @@
     <p class="lede">One file, two independent conditions. Take them one at a time: <code>&amp;&amp;</code> wants every input true, <code>||</code> is happy with one.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>if (<span class="slot">condition1</span> &amp;&amp; <span class="slot">condition2</span>) {
+    <span class="cmt">// runs only when both are true</span>
+}
+
+if (<span class="slot">condition1</span> || <span class="slot">condition2</span>) {
+    <span class="cmt">// runs when at least one is true</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">condition1</span></dt><dd>Always evaluated, and always first.</dd>
+      <dt><span class="slot">condition2</span></dt><dd>Evaluated only if it can still change the answer. That is the short-circuit.</dd>
+      <dt>&amp;&amp;</dt><dd>AND. True only when both sides are true, so a false left side skips the right.</dd>
+      <dt>||</dt><dd>OR. True when either side is true, so a true left side skips the right.</dd>
+    </dl>
+  </section>
+
   <!-- ============================================================ AND -->
 
   <div class="section-head">

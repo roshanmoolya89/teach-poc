@@ -32,6 +32,17 @@
     <p class="lede">The whole if / else squeezed into a single expression. Drag the marks and watch which side of the colon wins.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code><span class="slot">type</span> <span class="slot">variable</span> = <span class="slot">condition</span> ? <span class="slot">valueIfTrue</span> : <span class="slot">valueIfFalse</span>;</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">condition</span></dt><dd>A boolean expression, checked first: <code>marks &gt;= 40</code></dd>
+      <dt><span class="slot">valueIfTrue</span></dt><dd>The value the whole expression takes when the condition is true. It sits between <code>?</code> and <code>:</code></dd>
+      <dt><span class="slot">valueIfFalse</span></dt><dd>The value it takes otherwise. It sits after the <code>:</code></dd>
+      <dt><span class="slot">type</span> <span class="slot">variable</span></dt><dd>Where the chosen value is stored. Both values must fit this type.</dd>
+    </dl>
+  </section>
+
   <div class="workbench">
 
     <section class="panel panel-preview">

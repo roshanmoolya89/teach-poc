@@ -232,6 +232,50 @@ function buildSidebar() {
   nav.innerHTML = parts.join("");
 }
 
+/* ----------------------------------------------------------------- maximize */
+
+/* Every panel gets a corner button that opens it full screen in this tab.
+   Only a class is toggled, so ids, listeners and the diagram keep working. */
+
+const MAX_ICON =
+  '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>';
+const MIN_ICON =
+  '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2v4H2M14 6h-4V2M10 14v-4h4M2 10h4v4"/></svg>';
+
+function setMax(panel, on) {
+  const button = $(".btn-max", panel);
+  panel.classList.toggle("is-max", on);
+  button.innerHTML = on ? MIN_ICON : MAX_ICON;
+  button.setAttribute("aria-pressed", String(on));
+  button.setAttribute("aria-label", on ? "Exit full screen" : "Maximize");
+  button.title = on ? "Exit full screen (Esc)" : "Maximize";
+  document.body.classList.toggle("has-max", Boolean($(".panel.is-max")));
+}
+
+function buildMaxButtons() {
+  // the preview tab is already a full-screen view of the diagram and code,
+  // so there only the syntax panel can be maximized
+  $$(PREVIEW_MODE ? ".panel.syntax" : ".panel").forEach((panel) => {
+    if ($(".btn-max", panel)) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn-max";
+    panel.appendChild(button);
+    setMax(panel, false);
+
+    button.addEventListener("click", () => {
+      const open = !panel.classList.contains("is-max");
+      $$(".panel.is-max").forEach((other) => setMax(other, false));
+      setMax(panel, open);
+    });
+  });
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  $$(".panel.is-max").forEach((panel) => setMax(panel, false));
+});
+
 /* ------------------------------------------------------- second-tab preview */
 
 /* The preview tab is the same page opened with ?view=preview. It hides
@@ -411,6 +455,7 @@ function buildPopButton() {
 // common.js loads at the end of <body>, so the sliders already exist; set them
 // up now, before the page script runs and starts writing their values.
 enhanceSliders();
+buildMaxButtons();
 document.addEventListener("DOMContentLoaded", enhanceSliders);
 document.addEventListener("DOMContentLoaded", buildSidebar);
 if (document.readyState !== "loading") buildSidebar();

@@ -32,6 +32,19 @@
     <p class="lede">Start once, check before every lap, update at the end of each. Step through it one move at a time and count the checks.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>for (<span class="slot">initialization</span>; <span class="slot">condition</span>; <span class="slot">update</span>) {
+    <span class="cmt">// body: the statements to repeat</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">initialization</span></dt><dd>Runs once, before anything else. Usually declares the counter: <code>int i = 1</code></dd>
+      <dt><span class="slot">condition</span></dt><dd>A boolean checked before every lap. True runs the body, false ends the loop: <code>i &lt;= 5</code></dd>
+      <dt><span class="slot">update</span></dt><dd>Runs after every lap, then control goes back to the condition: <code>i++</code></dd>
+      <dt>body</dt><dd>Everything between the braces. Runs once per lap, and not at all if the condition starts out false.</dd>
+    </dl>
+  </section>
+
   <div class="workbench">
 
     <section class="panel panel-preview">

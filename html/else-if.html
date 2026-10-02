@@ -32,6 +32,22 @@
     <p class="lede">Questions run top to bottom and stop at the first yes. Drag the marks and count how many checks actually happen.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>if (<span class="slot">condition1</span>) {
+    <span class="cmt">// runs when condition1 is true</span>
+} else if (<span class="slot">condition2</span>) {
+    <span class="cmt">// runs when condition1 is false and condition2 is true</span>
+} else {
+    <span class="cmt">// runs when none of the conditions is true</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">condition1</span></dt><dd>Checked first. If it is true its block runs and the rest of the chain is skipped.</dd>
+      <dt><span class="slot">condition2</span></dt><dd>Checked only when everything above it was false. Add as many <code>else if</code> steps as you need.</dd>
+      <dt>else</dt><dd>Optional fallback with no condition. It runs when every check above failed.</dd>
+    </dl>
+  </section>
+
   <div class="workbench">
 
     <section class="panel panel-preview">

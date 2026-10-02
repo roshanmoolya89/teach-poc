@@ -32,6 +32,20 @@
     <p class="lede">A boolean picks the room, and Java runs exactly one block. Flip the switch and watch the light move.</p>
   </div>
 
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>if (<span class="slot">condition</span>) {
+    <span class="cmt">// runs when the condition is true</span>
+} else {
+    <span class="cmt">// runs when the condition is false</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">condition</span></dt><dd>Any expression that is a boolean: a boolean variable, or a comparison such as <code>marks &gt;= 40</code></dd>
+      <dt>if block</dt><dd>The statements between the first pair of braces. They run only when the condition is true.</dd>
+      <dt>else block</dt><dd>Optional. Runs in every other case. Leave it out and a false condition simply does nothing.</dd>
+    </dl>
+  </section>
+
   <div class="workbench">
 
     <section class="panel panel-preview">
