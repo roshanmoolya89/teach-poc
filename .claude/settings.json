@@ -9,7 +9,11 @@
       "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1500,760 --virtual-time-budget=4000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/shots/align-for.png file:///Users/roshanmoolya/Documents/java_projects/java-course/java-teaching/html/for-loop.html)",
       "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --window-size=1500,700 --virtual-time-budget=4000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/3b55d464-e291-46b2-8b67-85dcdf1e2200/scratchpad/shots/align-logical.png file:///Users/roshanmoolya/Documents/java_projects/java-course/java-teaching/html/logical-operators.html)",
       "Bash(node -e \"require\\('fs'\\).readFileSync\\('js/common.js','utf8'\\)\")",
-      "Bash(node --check js/common.js)"
+      "Bash(node --check js/common.js)",
+      "Bash(javac -version)",
+      "Bash(java -version)",
+      "Bash(sed -e 's/transition: fill .18s, stroke .18s;//' -e 's/ transition: stroke .18s;//' -e 's/ transition: fill .18s;//' java-internals.html)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files --window-size=1500,900 --virtual-time-budget=5000 --screenshot=/private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/e16818a5-4fd1-4ab9-a4ad-2aaaaa72ece2/scratchpad/shots/t7.png 'file:///private/tmp/claude-501/-Users-roshanmoolya-Documents-java-projects-java-course-java-teaching/e16818a5-4fd1-4ab9-a4ad-2aaaaa72ece2/scratchpad/drive.html?page=file://__TRACKED_VAR__/_t.html%3Fview=preview&s=7')"
     ]
   }
 }

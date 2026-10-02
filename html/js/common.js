@@ -145,6 +145,17 @@ function enhanceSliders() {
 
 const TOPICS = [
   {
+    group: "How Java runs",
+    items: [
+      {
+        id: "internals",
+        href: "java-internals.html",
+        label: "Source to running program",
+        file: "JDK, JRE, JVM",
+      },
+    ],
+  },
+  {
     group: "Conditionals",
     items: [
       {

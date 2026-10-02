@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Java runs · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Every box and arrow starts neutral, turns amber while its stage is
+   happening, and stays teal once that stage is behind us. */
+.jv-shape {
+  fill: var(--surface);
+  stroke: var(--dim);
+  stroke-width: 1.5;
+}
+.jv-frame { fill: none; }
+.jv-wire { fill: none; stroke: var(--dim); stroke-width: 1.5; }
+.jv-head { fill: var(--dim); }
+
+.jv-title { font-family: var(--sans); font-size: 12.5px; font-weight: 500; fill: var(--ink); }
+.jv-name { font-family: var(--mono); font-size: 12.5px; font-weight: 500; fill: var(--ink); }
+.jv-file { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-soft); }
+.jv-sub { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-soft); }
+.jv-chip { font-family: var(--mono); font-size: 10.5px; fill: var(--ink); }
+
+.is-done > .jv-shape { stroke: var(--accent); }
+.is-done > .jv-wire { stroke: var(--accent); }
+.is-done > .jv-head { fill: var(--accent); }
+
+.is-now > .jv-shape { stroke: var(--amber); stroke-width: 2.5; fill: var(--amber-soft); }
+.is-now > .jv-frame { fill: none; }
+.is-now > .jv-wire { stroke: var(--amber); stroke-width: 2.5; }
+.is-now > .jv-head { fill: var(--amber); }
+
+/* what is happening at the current stage, in a sentence */
+.caption {
+  margin: 14px 2px 0;
+  font-size: 15.5px;
+  min-height: 4.5em;
+}
+.caption b { color: var(--amber); font-weight: 600; }
+
+.panel.is-max .caption { font-size: 19px; max-width: 70ch; }
+body.is-preview .caption { font-size: 19px; text-align: center; min-height: 3em; }
+
+/* the diagram carries this page, so it gets the wider column */
+@media (min-width: 901px) {
+  body:not(.is-preview) .workbench { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+}
+
+/* below the diagram on this page, not above it; the two lists share one
+   term width so their descriptions line up */
+.workbench + .syntax { margin-top: 26px; }
+.syntax .legend + .legend { margin-top: 9px; }
+.syntax .legend dt { min-width: 9em; }
+body.is-preview .syntax .legend + .legend { margin-top: 0; }
+</style>
+</head>
+<body data-topic="internals">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>How Java runs</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">JavaInternalWorking / Hello.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">Java internals</p>
+    <h1>From a text file to a running program</h1>
+    <p class="lede">Java code is translated twice: once by <code>javac</code> into bytecode, then by the JVM into something your machine can run. Step through it and watch one file make the trip.</p>
+  </div>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 540 372" role="img" aria-label="Source code goes through javac to become bytecode, which runs on the JVM inside the JRE, on top of the operating system and hardware">
+
+          <!-- your computer -->
+          <rect class="jv-shape jv-frame" x="6" y="6" width="528" height="360" rx="10"/>
+          <text class="jv-sub" x="20" y="24">Your computer</text>
+
+          <!-- JDK: the tools plus the runtime -->
+          <rect class="jv-shape jv-frame" x="22" y="34" width="496" height="262" rx="9" stroke-dasharray="5 4"/>
+          <text class="jv-name" x="36" y="53">JDK</text>
+          <text class="jv-sub" x="36" y="66">javac + JRE</text>
+
+          <!-- OS / hardware -->
+          <g data-node="a-os">
+            <path class="jv-wire" d="M270,316 V293"/>
+            <path class="jv-head" d="M270,285 L265.5,294 L274.5,294 Z"/>
+          </g>
+          <text class="jv-sub" x="279" y="310">hosts</text>
+          <g data-node="os">
+            <rect class="jv-shape" x="38" y="316" width="464" height="36" rx="7"/>
+            <text class="jv-name" x="270" y="332" text-anchor="middle">OS / Hardware</text>
+            <text class="jv-sub" x="270" y="345" text-anchor="middle">Windows &middot; macOS &middot; Linux, and the CPU underneath</text>
+          </g>
+
+          <!-- JRE, with the JVM inside it -->
+          <g data-node="jre">
+            <rect class="jv-shape jv-frame" x="58" y="156" width="424" height="128" rx="9"/>
+            <text class="jv-name" x="270" y="262" text-anchor="middle">JRE</text>
+            <text class="jv-sub" x="270" y="275" text-anchor="middle">JVM + class libraries (java.lang, java.util &hellip;)</text>
+          </g>
+
+          <g data-node="jvm">
+            <rect class="jv-shape" x="94" y="170" width="352" height="74" rx="8"/>
+            <text class="jv-name" x="270" y="189" text-anchor="middle">JVM</text>
+          </g>
+          <path class="jv-wire" d="M198,214 H210 M302,214 H314"/>
+          <g data-node="c-load">
+            <rect class="jv-shape" x="106" y="200" width="92" height="28" rx="6"/>
+            <text class="jv-chip" x="152" y="217.5" text-anchor="middle">Class loader</text>
+          </g>
+          <g data-node="c-verify">
+            <rect class="jv-shape" x="210" y="200" width="92" height="28" rx="6"/>
+            <text class="jv-chip" x="256" y="217.5" text-anchor="middle">Verifier</text>
+          </g>
+          <g data-node="c-exec">
+            <rect class="jv-shape" x="314" y="200" width="120" height="28" rx="6"/>
+            <text class="jv-chip" x="374" y="217.5" text-anchor="middle">Interpreter + JIT</text>
+          </g>
+
+          <!-- javac is a Java program too, so the JVM runs it -->
+          <g data-node="a-tool">
+            <path class="jv-wire" d="M278,156 V139"/>
+            <path class="jv-head" d="M278,131 L273.5,140 L282.5,140 Z"/>
+          </g>
+          <text class="jv-sub" x="287" y="148">runs javac</text>
+
+          <!-- the top row: source -> javac -> bytecode -->
+          <g data-node="a-src">
+            <path class="jv-wire" d="M180,92 H225"/>
+            <path class="jv-head" d="M233,92 L224,87.5 L224,96.5 Z"/>
+          </g>
+          <g data-node="a-out">
+            <path class="jv-wire" d="M324,92 H367"/>
+            <path class="jv-head" d="M375,92 L366,87.5 L366,96.5 Z"/>
+          </g>
+          <g data-node="a-load">
+            <path class="jv-wire" d="M476,92 C512,96 514,168 453,202.6"/>
+            <path class="jv-head" d="M446,206.5 L455.2,206.5 L450.8,198.7 Z"/>
+          </g>
+
+          <g data-node="src">
+            <circle class="jv-shape" cx="140" cy="92" r="38"/>
+            <text class="jv-title" x="140" y="89" text-anchor="middle">Source</text>
+            <text class="jv-file" x="140" y="104" text-anchor="middle">Hello.java</text>
+          </g>
+          <g data-node="javac">
+            <polygon class="jv-shape" points="278,56 322,92 278,128 234,92"/>
+            <text class="jv-name" x="278" y="91" text-anchor="middle">javac</text>
+            <text class="jv-sub" x="278" y="104" text-anchor="middle">compiler</text>
+          </g>
+          <g data-node="byte">
+            <rect class="jv-shape" x="376" y="66" width="100" height="52" rx="8"/>
+            <text class="jv-title" x="426" y="89" text-anchor="middle">Bytecode</text>
+            <text class="jv-file" x="426" y="104" text-anchor="middle">Hello.class</text>
+          </g>
+        </svg>
+      </div>
+
+      <p class="caption" id="j-caption"></p>
+
+      <div class="facts">
+        <span class="fact">stage <b id="j-fact-stage">0</b> of 7</span>
+        <span class="fact">file in play: <b id="j-fact-file">&mdash;</b></span>
+        <span class="fact">doing the work: <b id="j-fact-actor">&mdash;</b></span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Walk through it</h2>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="j-step">Step</button>
+          <button class="btn" id="j-back">Back</button>
+          <button class="btn" id="j-run">Run all</button>
+          <button class="btn" id="j-reset">Reset</button>
+        </div>
+        <p class="hint" style="margin-top:14px;margin-bottom:0">Amber is what is happening now, teal is what has already happened. The left and right arrow keys step too.</p>
+      </div>
+
+      <div>
+        <h2>Hello.java &mdash; what you write</h2>
+        <pre class="code"><code><span class="ln" data-line="s1">public class Hello {</span><span class="ln" data-line="s2">    public static void main(String[] args) {</span><span class="ln" data-line="s3">        System.out.println("Hello, Java!");</span><span class="ln" data-line="s4">    }</span><span class="ln" data-line="s5">}</span></code></pre>
+      </div>
+
+      <div>
+        <h2>Hello.class &mdash; what the JVM reads</h2>
+        <pre class="code" id="j-byte-empty"><code><span class="cmt">// does not exist yet: nothing has been compiled</span></code></pre>
+        <pre class="code" id="j-byte" hidden><code><span class="ln" data-line="b1">0: getstatic     #7   <span class="cmt">// System.out</span></span><span class="ln" data-line="b2">3: ldc           #13  <span class="cmt">// "Hello, Java!"</span></span><span class="ln" data-line="b3">5: invokevirtual #15  <span class="cmt">// println</span></span><span class="ln" data-line="b4">8: return</span></code></pre>
+        <p class="hint" style="margin:12px 0 0">The body of <code>main</code>, as printed by <code>javap -c Hello</code>. The file itself is binary.</p>
+      </div>
+
+      <div>
+        <h2>Terminal</h2>
+        <div class="console" id="j-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="panel syntax">
+    <h2>The pieces</h2>
+    <dl class="legend">
+      <dt>Source code</dt><dd>The <code>.java</code> file you type. Plain text, readable by people, meaningless to a CPU.</dd>
+      <dt>javac</dt><dd>The compiler. Checks the source for mistakes and translates it. Runs once, before the program does.</dd>
+      <dt>Bytecode</dt><dd>The <code>.class</code> file javac writes. Instructions for the JVM rather than for any real processor, so the same file runs everywhere.</dd>
+    </dl>
+    <dl class="legend">
+      <dt>JVM</dt><dd>Java Virtual Machine. Loads the bytecode, checks it, and turns it into machine code as the program runs.</dd>
+      <dt>JRE</dt><dd>Java Runtime Environment. The JVM plus the ready-made classes every program leans on, such as <code>String</code> and <code>System</code>.</dd>
+      <dt>JDK</dt><dd>Java Development Kit. The JRE plus the tools for writing programs: <code>javac</code>, <code>javap</code>, <code>jar</code>.</dd>
+      <dt>OS / Hardware</dt><dd>What finally does the work. The JVM is built separately for each one, which is why your bytecode does not have to be.</dd>
+    </dl>
+  </section>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>Three nested boxes: the JDK contains the JRE, which contains the JVM. Since Java 11 there is no separate JRE to download, so installing the JDK gives you all three.</li>
+        <li>Two commands, two moments. <code>javac</code> is compile time and happens once. <code>java</code> is run time and happens every time.</li>
+        <li>Bytecode is the same on every machine. The JVM is the part that differs per operating system. That is &ldquo;write once, run anywhere&rdquo;.</li>
+        <li>The arrow going up into javac: the compiler is itself a Java program, so it runs on the JVM too.</li>
+        <li>A missing semicolon is caught by javac and the program never starts. Dividing by zero is caught by the JVM, while it runs.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Run <code>javac Hello.java</code>, then list the folder. Ask what the new file is, and open it in an editor to see that it is not text.</li>
+        <li>Run <code>javap -c Hello</code> and match the four instructions to the one line of Java.</li>
+        <li>Delete <code>Hello.java</code> and run <code>java Hello</code>. It still works. Ask why.</li>
+        <li>Now delete <code>Hello.class</code> instead and run <code>java Hello</code>. Read the error together.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="index.html">&larr; All topics</a>
+  <a href="ternary.html">Ternary operator &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/java-internals.js"></script>
+</body>
+</html>
