@@ -200,8 +200,11 @@ function render() {
   } else if (state.how === 'cond') {
     status.textContent = `i = ${state.i} → condition false → exit`;
   } else {
-    status.textContent = '';
+    // while it is running, this line is the live value of i
+    status.textContent = state.i === null ? '' : `i = ${state.i}`;
   }
+  status.setAttribute('fill', state.phase === 'done' ? 'var(--no)' : 'var(--accent)');
+  status.setAttribute('font-size', state.phase === 'done' || state.i === null ? '11' : '15');
 
   // code
   const skippedLap = state.phase === 'ifc' && state.hit;

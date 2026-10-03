@@ -164,9 +164,29 @@ function render() {
     label.setAttribute('font-weight', current ? '600' : '500');
   });
 
-  // centre caption and exit marker
+  // centre: a caption before the run, then the live value of i and the move
+  // that has just happened to it
+  const started = state.i !== null;
+  $('#f-centre-idle').style.display = started ? 'none' : '';
+  $('#f-centre-live').style.display = started ? '' : 'none';
   $('#f-centre-1').textContent = laps === 0 ? 'body never' : 'same body,';
   $('#f-centre-2').textContent = laps === 0 ? 'runs' : `${laps} lap${laps === 1 ? '' : 's'}`;
+
+  if (started) {
+    const note = $('#f-live-note');
+    const live = {
+      cond: state.checkRuns === 0 ? [`int i = ${start}`, 'var(--amber)'] : [`i += ${inc}`, 'var(--amber)'],
+      body: [`${state.i} <= ${end} true`, 'var(--yes)'],
+      upd: [`printed ${state.i}`, 'currentColor'],
+      done: [`${state.i} <= ${end} false`, 'var(--no)']
+    }[state.phase];
+    $('#f-live-i').textContent = state.i;
+    $('#f-live-i').setAttribute('fill', state.phase === 'done' ? 'var(--no)' : state.phase === 'cond' ? 'var(--amber)' : 'var(--accent)');
+    note.textContent = live[0];
+    note.setAttribute('fill', live[1]);
+  }
+
+  // exit marker
   $('#f-exit-t').textContent = `i = ${start + laps * inc} → exit`;
   $('#f-exit').classList.toggle('is-off', state.phase !== 'done');
 
