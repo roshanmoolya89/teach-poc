@@ -421,6 +421,46 @@ body.has-max { overflow: hidden; }
 .panel.is-max .legend code { font-size: 15px; }
 .panel.is-max .stage svg { max-height: calc(100vh - 200px); }
 
+/* ----------------------------------------------------------------- pointer */
+
+/* The highlight that follows the mouse. It sits above a maximized panel and
+   never takes clicks, so everything under it stays usable. */
+
+.pointer-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  border: 3px solid var(--no);
+  background: color-mix(in srgb, var(--no) 28%, transparent);
+  pointer-events: none;
+  display: none;
+}
+
+body.has-pointer .pointer-dot.is-shown { display: block; }
+
+/* squeezes in while the mouse button is held, so clicks are visible too */
+.pointer-dot.is-down {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  background: color-mix(in srgb, var(--no) 50%, transparent);
+}
+
+.btn-pointer.is-live {
+  border-color: var(--no);
+  color: var(--no);
+  background: var(--no-soft);
+}
+
+@media print {
+  .pointer-dot { display: none !important; }
+}
+
 /* ---------------------------------------------------------------- diagram */
 
 .stage {
@@ -848,6 +888,23 @@ body.is-preview .panel-controls {
 
 body.is-preview .panel-preview { order: 0; }
 body.is-preview .panel-controls { order: 1; display: flex; flex-direction: column; }
+
+/* these two have no padding here, so tuck the maximize button into the corner;
+   on the stage it is small enough to sit inside the stage's own padding */
+body.is-preview .panel-preview:not(.is-max) > .btn-max {
+  top: 2px;
+  right: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+body.is-preview .panel-controls:not(.is-max) > .btn-max { top: -6px; right: 0; }
+
+/* maximized, they need the surface and padding back to cover the page */
+body.is-preview .panel.is-max {
+  background: var(--surface);
+  padding: 28px clamp(20px, 5vw, 64px) 36px;
+}
 
 /* code and output split the column's height evenly (the flexbox page has
    no output, so its CSS takes the whole column) */

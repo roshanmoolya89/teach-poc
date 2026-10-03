@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>do-while loop · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="do-while">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>do-while loop</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / loops / DoWhile.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">loops/DoWhile.java</p>
+    <h1>Act first, ask after</h1>
+    <p class="lede">The body sits above the condition, and that is the order it runs in. The menu is always shown once before anyone asks whether to show it again.</p>
+  </div>
+
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>do {
+    <span class="cmt">// body: the statements to repeat</span>
+} while (<span class="slot">condition</span>);</code></pre>
+    <dl class="legend">
+      <dt>body</dt><dd>Runs first, before any check. So it always runs at least once.</dd>
+      <dt><span class="slot">condition</span></dt><dd>A boolean checked after every lap. True goes round again, false ends the loop: <code>choice != 2</code></dd>
+      <dt><code>;</code></dt><dd>The closing semicolon is required here. It is the one loop that ends with one.</dd>
+    </dl>
+  </section>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 210" role="img" aria-label="A flow with the body on top and the condition underneath">
+          <text x="180" y="20" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.65">do { &hellip; } while (choice != 2)</text>
+
+          <rect id="d-body" class="d-box" x="110" y="32" width="140" height="46" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <text x="180" y="51" text-anchor="middle" class="d-text" font-size="11" fill="currentColor">show the menu</text>
+          <text x="180" y="67" text-anchor="middle" class="d-text" font-size="11" fill="currentColor">read choice</text>
+
+          <path d="M180,78 V98" stroke="var(--dim)" stroke-width="2"/>
+          <path d="M175,97 L180,105 L185,97 Z" fill="var(--dim)"/>
+
+          <polygon id="d-cond" class="d-box" points="180,105 252,135 180,165 108,135" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <text x="180" y="139" text-anchor="middle" class="d-text" font-size="11" fill="currentColor">choice != 2 ?</text>
+
+          <g id="d-again" class="d-box">
+            <path d="M108,135 H62 V55 H102" fill="none" stroke="var(--yes)" stroke-width="2"/>
+            <path d="M101,50 L110,55 L101,60 Z" fill="var(--yes)"/>
+            <text x="54" y="92" text-anchor="end" class="d-text" font-size="10" fill="var(--yes)">true</text>
+            <text x="54" y="105" text-anchor="end" class="d-text" font-size="10" fill="var(--yes)">again</text>
+          </g>
+
+          <g id="d-exit" class="d-box">
+            <path d="M180,165 V181" stroke="var(--no)" stroke-width="2"/>
+            <path d="M175,180 L180,188 L185,180 Z" fill="var(--no)"/>
+            <text x="180" y="202" text-anchor="middle" class="d-text" font-size="10" fill="var(--no)">false &#8594; loop ends</text>
+          </g>
+
+          <rect id="d-box-choice" class="d-box" x="270" y="34" width="76" height="42" rx="7" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <text x="308" y="49" text-anchor="middle" class="d-text" font-size="9" fill="currentColor" opacity="0.6">choice</text>
+          <text id="d-choice" x="308" y="67" text-anchor="middle" class="d-text" font-size="14" font-weight="500" fill="var(--accent)">?</text>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">choice is now <b id="d-fact-choice">&mdash;</b></span>
+        <span class="fact">body ran <b id="d-fact-body">0</b>&times;</span>
+        <span class="fact">check ran <b id="d-fact-check">0</b>&times;</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="quit">user picks 2 (Quit) on try <span class="val" id="quit-val">1</span></label>
+            <input type="range" id="quit" min="1" max="6" value="1">
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:18px">
+          <button class="btn btn-primary" id="d-run">Run all</button>
+          <button class="btn" id="d-step">Step</button>
+          <button class="btn" id="d-reset">Reset</button>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">int choice;</span><span class="ln" data-line="2">do {</span><span class="ln" data-line="3">    System.out.println("Menu: 1. Play  2. Quit");</span><span class="ln" data-line="4">    choice = <i class="v" data-var="choice">2</i>; <span class="cmt">// typed by the user</span></span><span class="ln" data-line="5">} while (<span data-part="cond">choice != 2</span>);</span></code></pre>
+        <p class="hint" style="margin:12px 0 0" id="d-phase">Press Step to walk through it one move at a time.</p>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="d-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>Read the code top to bottom: body, then condition. That is exactly the order Java runs it in.</li>
+        <li>The body and the check run the same number of times. In <code>for</code> and <code>while</code> the check runs once more.</li>
+        <li><code>choice</code> has no value when the loop starts. That is fine, because the body gives it one before the condition reads it.</li>
+        <li>It suits anything that must happen before you can decide: showing a menu, asking for a password, reading input to validate.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Leave the slider on 1. The user quits straight away, yet the menu still prints. Ask why.</li>
+        <li>Move it to 4 and ask how many times the menu prints before you run it.</li>
+        <li>Ask what a plain <code>while (choice != 2)</code> would do with <code>choice</code> not yet set.</li>
+        <li>Delete the final semicolon in your editor and read the compiler error together.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="while-loop.html">&larr; while loop</a>
+  <a href="for-each.html">for-each &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/do-while.js"></script>
+</body>
+</html>

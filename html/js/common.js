@@ -199,6 +199,30 @@ const TOPICS = [
         label: "for loop",
         file: "loops/For.java",
       },
+      {
+        id: "while",
+        href: "while-loop.html",
+        label: "while loop",
+        file: "loops/While.java",
+      },
+      {
+        id: "do-while",
+        href: "do-while.html",
+        label: "do-while loop",
+        file: "loops/DoWhile.java",
+      },
+      {
+        id: "for-each",
+        href: "for-each.html",
+        label: "for-each",
+        file: "loops/ForEach.java",
+      },
+      {
+        id: "break-continue",
+        href: "break-continue.html",
+        label: "break and continue",
+        file: "loops/BreakContinue.java",
+      },
     ],
   },
   {
@@ -264,9 +288,7 @@ function setMax(panel, on) {
 }
 
 function buildMaxButtons() {
-  // the preview tab is already a full-screen view of the diagram and code,
-  // so there only the syntax panel can be maximized
-  $$(PREVIEW_MODE ? ".panel.syntax" : ".panel").forEach((panel) => {
+  $$(".panel").forEach((panel) => {
     if ($(".btn-max", panel)) return;
     const button = document.createElement("button");
     button.type = "button";
@@ -285,6 +307,86 @@ function buildMaxButtons() {
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   $$(".panel.is-max").forEach((panel) => setMax(panel, false));
+});
+
+/* ------------------------------------------------------------------ pointer */
+
+/* A large highlight that follows the mouse, for pointing at things from the
+   front of the room. Toggled with the Pointer button or the P key; the real
+   cursor stays underneath so clicking is still precise. */
+
+const POINTER_KEY = "java-course-pointer";
+let pointerDot = null;
+
+function pointerSaved() {
+  try {
+    return localStorage.getItem(POINTER_KEY) === "on";
+  } catch (err) {
+    return false;
+  }
+}
+
+function setPointer(on) {
+  if (on && !pointerDot) {
+    pointerDot = document.createElement("div");
+    pointerDot.className = "pointer-dot";
+    pointerDot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(pointerDot);
+  }
+  if (pointerDot) pointerDot.classList.remove("is-shown", "is-down");
+  document.body.classList.toggle("has-pointer", on);
+  $$(".btn-pointer").forEach((button) => {
+    button.setAttribute("aria-pressed", String(on));
+    button.classList.toggle("is-live", on);
+  });
+  try {
+    localStorage.setItem(POINTER_KEY, on ? "on" : "off");
+  } catch (err) {
+    // storage is blocked; the toggle still works for this page
+  }
+}
+
+function pointerOn() {
+  return document.body.classList.contains("has-pointer");
+}
+
+function buildPointerButton() {
+  const slot = $(PREVIEW_MODE ? ".preview-bar" : ".topbar-right");
+  if (slot) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-pop btn-pointer";
+    button.textContent = "Pointer";
+    button.title = "Big pointer (P)";
+    button.addEventListener("click", () => setPointer(!pointerOn()));
+    slot.appendChild(button);
+  }
+  setPointer(pointerSaved());
+}
+
+document.addEventListener("mousemove", (event) => {
+  if (!pointerDot || !pointerOn()) return;
+  pointerDot.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+  pointerDot.classList.add("is-shown");
+});
+
+document.addEventListener("mousedown", () => {
+  if (pointerDot) pointerDot.classList.add("is-down");
+});
+
+document.addEventListener("mouseup", () => {
+  if (pointerDot) pointerDot.classList.remove("is-down");
+});
+
+document.documentElement.addEventListener("mouseleave", () => {
+  if (pointerDot) pointerDot.classList.remove("is-shown");
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key.toLowerCase() !== "p") return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  if (event.target.closest("input:not([type='range']), textarea, select")) return;
+  setPointer(!pointerOn());
 });
 
 /* ------------------------------------------------------- second-tab preview */
@@ -467,6 +569,7 @@ function buildPopButton() {
 // up now, before the page script runs and starts writing their values.
 enhanceSliders();
 buildMaxButtons();
+buildPointerButton();
 document.addEventListener("DOMContentLoaded", enhanceSliders);
 document.addEventListener("DOMContentLoaded", buildSidebar);
 if (document.readyState !== "loading") buildSidebar();

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>while loop · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="while">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>while loop</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / loops / While.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">loops/While.java</p>
+    <h1>Chop until nothing is left</h1>
+    <p class="lede">No counter and no fixed number of laps. The loop keeps going for as long as the condition holds, so something inside the body has to change it.</p>
+  </div>
+
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>while (<span class="slot">condition</span>) {
+    <span class="cmt">// body: the statements to repeat</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><span class="slot">condition</span></dt><dd>A boolean checked before every lap. True runs the body, false ends the loop: <code>number &gt; 0</code></dd>
+      <dt>body</dt><dd>Runs once per lap. It must change something the condition reads, or the loop never ends: <code>number = number / 10</code></dd>
+      <dt>zero laps</dt><dd>If the condition is false the first time, the body does not run at all.</dd>
+    </dl>
+  </section>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 210" role="img" aria-label="The digits of the number, with one chopped off on every lap">
+          <text x="180" y="20" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.65">while (number &gt; 0)</text>
+
+          <g id="w-digits"></g>
+
+          <rect id="w-box-number" class="d-box" x="56" y="108" width="116" height="40" rx="7" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <text x="114" y="122" text-anchor="middle" class="d-text" font-size="9" fill="currentColor" opacity="0.6">number</text>
+          <text id="w-number" x="114" y="140" text-anchor="middle" class="d-text" font-size="14" font-weight="500" fill="var(--accent)">&mdash;</text>
+
+          <rect id="w-box-digits" class="d-box" x="188" y="108" width="116" height="40" rx="7" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+          <text x="246" y="122" text-anchor="middle" class="d-text" font-size="9" fill="currentColor" opacity="0.6">digits</text>
+          <text id="w-count" x="246" y="140" text-anchor="middle" class="d-text" font-size="14" font-weight="500" fill="var(--accent)">&mdash;</text>
+
+          <text id="w-check" x="180" y="182" text-anchor="middle" class="d-text" font-size="11" fill="currentColor" opacity="0.65"></text>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">number is now <b id="w-fact-number">&mdash;</b></span>
+        <span class="fact">body ran <b id="w-fact-body">0</b>&times;</span>
+        <span class="fact">check ran <b id="w-fact-check">0</b>&times;</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="number">int number = <span class="val" id="number-val">1234</span></label>
+            <input type="range" id="number" min="0" max="99999" value="1234">
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:18px">
+          <button class="btn btn-primary" id="w-run">Run all</button>
+          <button class="btn" id="w-step">Step</button>
+          <button class="btn" id="w-reset">Reset</button>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">int number = <i class="v" data-var="number">1234</i>;</span><span class="ln" data-line="2">int digits = 0;</span><span class="ln" data-line="3"> </span><span class="ln" data-line="4">while (<span data-part="cond">number &gt; 0</span>) {</span><span class="ln" data-line="5">    number = number / 10;</span><span class="ln" data-line="6">    digits++;</span><span class="ln" data-line="7">}</span><span class="ln" data-line="8">System.out.println("Digits: " + digits);</span></code></pre>
+        <p class="hint" style="margin:12px 0 0" id="w-phase">Press Step to walk through it one move at a time.</p>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="w-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li>There is no counter in the header. You cannot tell how many laps there will be without knowing the number.</li>
+        <li><code>number / 10</code> is integer division, so the last digit is simply dropped: <code>1234 / 10</code> is <code>123</code>.</li>
+        <li>The check comes first. Like <code>for</code>, it runs one more time than the body.</li>
+        <li>The body changes <code>number</code>, and the condition reads <code>number</code>. Take that line away and the loop never ends.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Ask how many laps 1234 will take before you press Run, then try 99999.</li>
+        <li>Set the number to 0. Ask what prints, then ask whether 0 really has zero digits.</li>
+        <li>Ask what would happen if <code>number = number / 10</code> were deleted.</li>
+        <li>Ask why a <code>for</code> loop is an awkward fit here.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="for-loop.html">&larr; for loop</a>
+  <a href="do-while.html">do-while &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/while-loop.js"></script>
+</body>
+</html>

@@ -77,7 +77,6 @@
       .item-picker button {
         font-family: var(--mono);
         font-size: 13px;
-        width: 38px;
         height: 34px;
         border-radius: 8px;
         border: 1px solid var(--line);
@@ -140,11 +139,11 @@
             </p>
             <div class="flex-stage">
               <div id="preview">
-                <div class="item" tabindex="0" data-index="0">1</div>
-                <div class="item" tabindex="0" data-index="1">222</div>
-                <div class="item" tabindex="0" data-index="2">3</div>
-                <div class="item" tabindex="0" data-index="3">4</div>
-                <div class="item" tabindex="0" data-index="4">5</div>
+                <div class="item" tabindex="0" data-index="0">oldest</div>
+                <div class="item" tabindex="0" data-index="1">middle</div>
+                <div class="item" tabindex="0" data-index="2">youngest</div>
+                <div class="item" tabindex="0" data-index="3">rebel</div>
+                <div class="item" tabindex="0" data-index="4">favourite</div>
               </div>
             </div>
             <p class="axis-note" id="fx-axis">
@@ -231,19 +230,19 @@
               <h2>The selected item</h2>
               <div class="item-picker" id="fx-picker">
                 <button type="button" data-index="0" aria-pressed="true">
-                  1
+                  oldest
                 </button>
                 <button type="button" data-index="1" aria-pressed="false">
-                  2
+                  middle
                 </button>
                 <button type="button" data-index="2" aria-pressed="false">
-                  3
+                  youngest
                 </button>
                 <button type="button" data-index="3" aria-pressed="false">
-                  4
+                  rebel
                 </button>
                 <button type="button" data-index="4" aria-pressed="false">
-                  5
+                  favourite
                 </button>
               </div>
               <div class="grid2" style="margin-top: 14px">
@@ -371,7 +370,7 @@
       </main>
 
       <nav class="pagenav">
-        <a href="for-loop.html">&larr; for loop</a>
+        <a href="break-continue.html">&larr; break and continue</a>
         <span>Last topic</span>
       </nav>
     </div>

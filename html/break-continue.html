@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>break and continue · Java course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-topic="break-continue">
+
+<aside class="sidebar" id="sidebar"></aside>
+
+<div class="main-col">
+
+<div class="preview-bar">
+  <span id="preview-badge">Live preview &mdash; controlled from the other tab</span>
+  <span>break and continue</span>
+</div>
+
+<header class="topbar">
+  <span class="crumb">ConditionalsAndLoops / examples / loops / BreakContinue.java</span>
+  <span class="topbar-right"><span id="pop-slot"></span></span>
+</header>
+
+<main class="topic">
+  <div class="intro">
+    <p class="eyebrow">loops/BreakContinue.java</p>
+    <h1>Skip one, stop at another</h1>
+    <p class="lede">Two ways to cut a lap short. <code>continue</code> abandons this lap and moves on to the next. <code>break</code> abandons the whole loop.</p>
+  </div>
+
+  <section class="panel syntax">
+    <h2>The syntax</h2>
+    <pre class="code"><code>for (&hellip;) {
+    if (<span class="slot">condition</span>) continue;   <span class="cmt">// skip the rest of this lap</span>
+    if (<span class="slot">condition</span>) break;      <span class="cmt">// leave the loop</span>
+    <span class="cmt">// rest of the body</span>
+}</code></pre>
+    <dl class="legend">
+      <dt><code>continue</code></dt><dd>Skips whatever is left of the body for this lap. In a <code>for</code> loop the update still runs, then the condition is checked as usual.</dd>
+      <dt><code>break</code></dt><dd>Ends the loop on the spot. No update, no further checks. Execution carries on after the closing brace.</dd>
+      <dt><span class="slot">condition</span></dt><dd>Both are almost always inside an <code>if</code>. On their own they would fire on the very first lap.</dd>
+    </dl>
+  </section>
+
+  <div class="workbench">
+
+    <section class="panel panel-preview">
+      <h2>The shape of it</h2>
+      <div class="stage">
+        <svg viewBox="0 0 360 210" role="img" aria-label="Ten stops in a row: one is skipped, and the loop stops at another">
+          <text x="180" y="20" text-anchor="middle" class="d-text" fill="currentColor" opacity="0.65">for (int i = 1; i &lt;= 10; i++)</text>
+
+          <line x1="27" y1="100" x2="333" y2="100" stroke="var(--line)" stroke-width="4"/>
+
+          <g id="b-skip">
+            <path id="b-skip-arc" d="" fill="none" stroke="var(--amber)" stroke-width="2"/>
+            <text id="b-skip-t" x="0" y="60" text-anchor="middle" class="d-text" font-size="10" fill="var(--amber)">continue</text>
+          </g>
+
+          <g id="b-stop">
+            <line id="b-stop-wall" x1="0" y1="80" x2="0" y2="120" stroke="var(--no)" stroke-width="3" stroke-linecap="round"/>
+            <text id="b-stop-t" x="0" y="136" text-anchor="middle" class="d-text" font-size="10" fill="var(--no)">break</text>
+          </g>
+
+          <g id="b-stops"></g>
+
+          <text id="b-status" x="180" y="176" text-anchor="middle" class="d-text" font-size="11" fill="var(--no)"></text>
+        </svg>
+      </div>
+
+      <div class="facts">
+        <span class="fact">i is now <b id="b-fact-i">&mdash;</b></span>
+        <span class="fact">printed <b id="b-fact-printed">0</b>&times;</span>
+        <span class="fact">skipped <b id="b-fact-skipped">0</b>&times;</span>
+      </div>
+    </section>
+
+    <section class="panel stack panel-controls">
+      <div>
+        <h2>Change the input</h2>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="skip">continue when i == <span class="val" id="skip-val">3</span></label>
+            <input type="range" id="skip" min="1" max="10" value="3">
+          </div>
+          <div class="ctrl">
+            <label for="stop">break when i == <span class="val" id="stop-val">6</span></label>
+            <input type="range" id="stop" min="1" max="10" value="6">
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:18px">
+          <button class="btn btn-primary" id="b-run">Run all</button>
+          <button class="btn" id="b-step">Step</button>
+          <button class="btn" id="b-reset">Reset</button>
+        </div>
+      </div>
+
+      <div>
+        <h2>The code</h2>
+        <pre class="code"><code><span class="ln" data-line="1">for (<span data-part="init">int i = 1</span>; <span data-part="cond">i &lt;= 10</span>; <span data-part="upd">i++</span>) {</span><span class="ln" data-line="2">    if (i == <i class="v" data-var="skip">3</i>) continue;   <span class="cmt">// skip this iteration</span></span><span class="ln" data-line="3">    if (i == <i class="v" data-var="stop">6</i>) break;      <span class="cmt">// exit the loop entirely</span></span><span class="ln" data-line="4">    System.out.println(i);</span><span class="ln" data-line="5">}</span></code></pre>
+        <p class="hint" style="margin:12px 0 0" id="b-phase">Press Step to walk through it one move at a time.</p>
+      </div>
+
+      <div>
+        <h2>Output</h2>
+        <div class="console" id="b-out"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h3>What to point out</h3>
+      <ul>
+        <li><code>continue</code> does not end the loop. The lap is cut short, <code>i++</code> still runs, and the next lap starts.</li>
+        <li><code>break</code> skips everything: the rest of the body, the update, and every lap that was still to come.</li>
+        <li>The loop said ten laps, but the header no longer tells the whole story. You have to read the body to know.</li>
+        <li>Order matters. The <code>continue</code> line is read first, so if both match the same <code>i</code>, <code>break</code> is never reached.</li>
+      </ul>
+    </div>
+    <div class="note try">
+      <h3>Try this with the class</h3>
+      <ul>
+        <li>Before running, have everyone write down the output. The README answer is 1 2 4 5.</li>
+        <li>Set both sliders to the same value. Ask what prints, then run it.</li>
+        <li>Set break lower than continue. Ask whether the <code>continue</code> ever fires.</li>
+        <li>Ask what would happen with <code>continue</code> in a <code>while</code> loop if the <code>i++</code> sat at the bottom of the body.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<nav class="pagenav">
+  <a href="for-each.html">&larr; for-each</a>
+  <a href="flexbox.html">Flexbox &rarr;</a>
+</nav>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/break-continue.js"></script>
+</body>
+</html>
